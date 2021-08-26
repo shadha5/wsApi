@@ -1,27 +1,22 @@
-
-import React from 'react'
-import { Button, Card } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-
+import React from "react";
+import {Card,Button} from 'react-bootstrap'
+import { Link } from "react-router-dom";
 const UserCard = ({user}) => {
-    return (
-        <div>
-            <Card style={{ width: '18rem' }}>
+  return <div>
+
+<Card style={{ width: '18rem' }}>
+  <span className='profil' > {user.name[0]} </span>
   <Card.Body>
     <Card.Title> {user.name} </Card.Title>
-    <Card.Text>
-         {user.email}
-    </Card.Text>
-    <Card.Text>
-         {user.phone}
-    </Card.Text>
-    <Link to = {`/profil/${user.id}`}>   <Button variant="primary">see profil</Button>
- </Link>
+    <p> {user.username} </p>
+    <p> {user.email} </p>
+    <Link to={`/profil/${user.id}`}>
+    <Button variant="danger">see profil</Button>
+    </Link>
+    
   </Card.Body>
 </Card>
-            
-        </div>
-    )
-}
+  </div>;
+};
 
-export default UserCard
+export default UserCard;

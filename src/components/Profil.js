@@ -1,16 +1,17 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Spinner } from "react-bootstrap";
-import UserCard from "./UserCard";
-const Profil = (props) => {
+import { useEffect, useState } from "react";
+import { Button, Card, Spinner } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
+const Profil = ({match}) => {
   const [profil, setProfil] = useState([]);
   const [isloading, setIsloading] = useState(true);
   useEffect(() => {
-    const getUsers = async () => {
+    const fetchprofil = async () => {
       try {
-        const data = await axios.get(
-          "https://jsonplaceholder.typicode.com/users/" +
-          props.match.params.id
+        const { data } = await axios.get(
+          `https://jsonplaceholder.typicode.com/users/${match.params.id}`
+          
         );
         setProfil(data);
         setIsloading(false);
@@ -18,14 +19,27 @@ const Profil = (props) => {
         console.error(error);
       }
     };
-    getUsers();
-  }, [props.match.params.id]);
+    fetchprofil();
+  }, [match]);
+  if (isloading) {
+    return <Spinner animation="border" variant="danger" />;
+  }
 
-  return (
-    <div>
-      {isloading ? <Spinner animation="border" /> : <UserCard user={profil} />}
-    </div>
-  );
+  return <div>
+
+ <Card style={{ width: '18rem' }}>
+  <span> {profil.name[0]} </span>
+  <Card.Body>
+    <Card.Title> {profil.name} </Card.Title>
+    <p> {profil.username} </p>
+    <p> {profil.email} </p>
+    <Link to="/">
+    <Button variant="danger">Go Back</Button>
+    </Link>
+    
+  </Card.Body>
+</Card>
+  </div>;
 };
 
 export default Profil;
